@@ -39,6 +39,11 @@ public class ProjectController {
         projectRepository.updateName(name, updatedName);
     }
 
+    @PutMapping("/project/{name}/url")
+    public void updateUrl(@PathVariable String name, @RequestBody String url) {
+        projectRepository.updateUrl(name, url);
+    }
+
     @PutMapping("/project/{name}/tech")
     public void updateTechnologies(@PathVariable String name, @RequestBody List<String> technologies) {
         projectRepository.updateTechnologies(name, technologies);

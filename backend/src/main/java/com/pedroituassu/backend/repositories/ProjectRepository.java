@@ -20,6 +20,10 @@ public interface ProjectRepository extends MongoRepository<Project, String> {
     @Update("{'$set':  {'name':  ?1}}")
     void updateName(String name, String updatedName);
 
+    @Query("{'url': ?0}")
+    @Update("{'$set': {'name': ?1}}")
+    void updateUrl(String name, String updatedUrl);
+
     @Query("{'name': ?0}")
     @Update("{'$set':  {'technologies':  ?1}}")
     void updateTechnologies(String name, List<String> technologies);
