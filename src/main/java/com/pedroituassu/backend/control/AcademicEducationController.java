@@ -1,42 +1,48 @@
 package com.pedroituassu.backend.control;
 
-
+import com.pedroituassu.backend.dtos.AcademicEducationUpdateDTO;
 import com.pedroituassu.backend.model.AcademicEducation;
-import com.pedroituassu.backend.repositories.AcademicEducationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pedroituassu.backend.service.AcademicEducationService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/academic_educations")
 public class AcademicEducationController {
 
-    @Autowired
-    AcademicEducationRepository academicEducationRepository;
+    private final AcademicEducationService academicEducationService;
 
-    @PostMapping("/academic")
+    public AcademicEducationController(AcademicEducationService academicEducationService) {
+        this.academicEducationService = academicEducationService;
+    }
+
+    @PostMapping
     public AcademicEducation addAcademicEducation(@RequestBody AcademicEducation academicEducation) {
-        return academicEducationRepository.save(academicEducation);
+        return academicEducationService.saveAcademicEducation(academicEducation);
     }
 
-    @GetMapping("/academic")
+    @GetMapping
     public List<AcademicEducation> getAllAcademicEducations() {
-        return academicEducationRepository.findAll();
+        return academicEducationService.getAllAcademicEducations();
     }
 
-    @GetMapping("/academic/{title}")
-    public AcademicEducation getAcademicAcademicEducation(@PathVariable String title) {
-        return academicEducationRepository.findByTitle(title);
+    @GetMapping("/{title}")
+    public AcademicEducation getAcademicEducationByTitle(@PathVariable String title) {
+        return academicEducationService.getAcademicEducationByTitle(title);
     }
 
-    @DeleteMapping("/academic/{title}")
+    @DeleteMapping("/{title}")
     public void deleteAcademicEducation(@PathVariable String title) {
-        academicEducationRepository.deleteByTitle(title);
+        academicEducationService.deleteAcademicEducation(title);
     }
 
-    @PutMapping("/academic/{title}/endDate")
-    public void updateEndDate(@PathVariable String title, @RequestBody Date endDate) {
-        academicEducationRepository.updateEndDate(title, endDate);
+    @PatchMapping("/{title}")
+    public ResponseEntity<Void> partialUpdateAcademicEducation(
+            @PathVariable String title,
+            @RequestBody AcademicEducationUpdateDTO updates
+    ) {
+        academicEducationService.partialUpdateAcademicEducation(title, updates);
+        return ResponseEntity.ok().build();
     }
 }

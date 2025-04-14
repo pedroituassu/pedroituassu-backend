@@ -1,51 +1,48 @@
 package com.pedroituassu.backend.control;
 
+import com.pedroituassu.backend.dtos.ExperienceUpdateDTO;
 import com.pedroituassu.backend.model.Experience;
-import com.pedroituassu.backend.repositories.ExperienceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pedroituassu.backend.service.ExperienceService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/experiences")
 public class ExperienceController {
 
-    @Autowired
-    private ExperienceRepository experienceRepository;
+    private final ExperienceService experienceService;
 
-    @PostMapping("/experience")
+    public ExperienceController(ExperienceService experienceService) {
+        this.experienceService = experienceService;
+    }
+
+    @PostMapping
     public Experience addExperience(@RequestBody Experience experience) {
-        return experienceRepository.save(experience);
+        return experienceService.saveExperience(experience);
     }
 
-    @GetMapping("/experience")
+    @GetMapping
     public List<Experience> getAllExperiences() {
-        return experienceRepository.findAll();
+        return experienceService.getAllExperiences();
     }
 
-    @GetMapping("/experience/{enterprise}")
-    public Experience getExperienceByEnterprise(@PathVariable("enterprise") String enterprise) {
-        return experienceRepository.findByEnterprise(enterprise);
+    @GetMapping("/{enterprise}")
+    public Experience getExperienceByEnterprise(@PathVariable String enterprise) {
+        return experienceService.getExperienceByEnterprise(enterprise);
     }
 
-    @DeleteMapping("/experience/{enterprise}")
-    public void deleteExperience(@PathVariable("enterprise") String enterprise) {
-        experienceRepository.deleteByEnterprise(enterprise);
+    @DeleteMapping("/{enterprise}")
+    public void deleteExperience(@PathVariable String enterprise) {
+        experienceService.deleteExperience(enterprise);
     }
 
-    @PutMapping("/experience/{enterprise}/role")
-    public void updateRole(@PathVariable String enterprise, @RequestBody String role) {
-        experienceRepository.updateRole(enterprise, role);
-    }
-
-    @PutMapping("/experience/{enterprise}/endDate")
-    public void updateEndDate(@PathVariable String enterprise, @RequestBody(required = false) Date endDate) {
-        experienceRepository.updateEndDate(enterprise, endDate);
-    }
-
-    @PutMapping("/experience/{enterprise}/description")
-    public void updateDescription(@PathVariable String enterprise, @RequestBody List<String> description) {
-        experienceRepository.updateDescription(enterprise, description);
+    @PatchMapping("/{enterprise}")
+    public ResponseEntity<Void> partialUpdateExperience(
+            @PathVariable String enterprise,
+            @RequestBody ExperienceUpdateDTO updates
+    ) {
+        experienceService.partialUpdateExperience(enterprise, updates);
+        return ResponseEntity.ok().build();
     }
 }
