@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.List;
 
 @Document("academicEducation")
 public class AcademicEducation {
@@ -15,13 +16,15 @@ public class AcademicEducation {
     private String location;
     private Date startDate;
     private Date endDate;
+    private List<Role> roles;
 
-    public AcademicEducation(String institute, String title, String location, Date startDate, Date endDate) {
+    public AcademicEducation(String institute, String title, String location, Date startDate, Date endDate, List<Role> roles) {
         this.institute = institute;
         this.title = title;
         this.location = location;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.roles = roles;
     }
 
     public String getId() {
@@ -70,5 +73,13 @@ public class AcademicEducation {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }

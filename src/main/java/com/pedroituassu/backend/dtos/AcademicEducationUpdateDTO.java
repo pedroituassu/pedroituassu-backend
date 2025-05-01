@@ -1,6 +1,8 @@
 package com.pedroituassu.backend.dtos;
 
 import java.util.Date;
+import java.util.List;
+import com.pedroituassu.backend.model.Role;
 
 public class AcademicEducationUpdateDTO {
 
@@ -9,6 +11,7 @@ public class AcademicEducationUpdateDTO {
     private String location;
     private Date startDate;
     private Date endDate;
+    private List<Role> roles;
 
     public String getInstitute() {
         return institute;
@@ -48,5 +51,13 @@ public class AcademicEducationUpdateDTO {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
     }
 }
