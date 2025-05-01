@@ -3,10 +3,7 @@ package com.pedroituassu.backend.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
 import java.util.List;
-
-import com.pedroituassu.backend.model.Role;
 
 @Document("experiences")
 public class Experience {

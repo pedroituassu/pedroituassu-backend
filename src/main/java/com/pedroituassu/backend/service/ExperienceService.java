@@ -41,11 +41,7 @@ public class ExperienceService {
         Update update = new Update();
 
         if (updates.getEnterprise() != null) update.set("enterprise", updates.getEnterprise());
-        if (updates.getRole() != null) update.set("role", updates.getRole());
-        if (updates.getStartDate() != null) update.set("startDate", updates.getStartDate());
-        if (updates.getEndDate() != null) update.set("endDate", updates.getEndDate());
-        if (updates.getLocation() != null) update.set("location", updates.getLocation());
-        if (updates.getDescription() != null) update.set("description", updates.getDescription());
+        if (updates.getRoles() != null) update.set("roles", updates.getRoles());
 
         mongoTemplate.updateFirst(query, update, Experience.class);
     }
