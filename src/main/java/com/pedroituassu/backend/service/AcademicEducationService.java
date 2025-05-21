@@ -45,6 +45,7 @@ public class AcademicEducationService {
         if (updates.getStartDate() != null) update.set("startDate", updates.getStartDate());
         if (updates.getEndDate() != null) update.set("endDate", updates.getEndDate());
         if (updates.getLocation() != null) update.set("location", updates.getLocation());
+        if (updates.getRoles() != null) update.set("roles", updates.getRoles());
 
         mongoTemplate.updateFirst(query, update, AcademicEducation.class);
     }
